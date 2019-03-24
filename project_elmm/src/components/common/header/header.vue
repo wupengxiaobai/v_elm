@@ -1,5 +1,5 @@
 <template>
-  <div class="header" v-if="sellerData.name">
+  <div class="header" v-if="sellerData.name" @click="showCover">
     <div class="main">
       <div class="avatar">
         <img :src="sellerData.avatar" :alt="sellerData.bulletin">
@@ -20,12 +20,19 @@
         <i class="icon-keyboard_arrow_right"></i>
       </div>
     </div>
-    <div class="bottom"></div>
+    <div class="footer">
+      <span class="icon"></span>
+      <div class="desc text-ov">{{ sellerData.bulletin }}</div>
+      <i class="icon-keyboard_arrow_right"></i>
+    </div>
+    <!-- 头部组件的弹出层 -->
+    <!-- <headerCover :sellerData="sellerData"/> -->
   </div>
 </template>
 
 <script>
 import Icon from "../support-ico/support-ico.vue";
+// import headerCover from "./header-cover.vue";
 export default {
   props: {
     sellerData: {
@@ -35,14 +42,25 @@ export default {
       }
     }
   },
+  methods: {
+    //   使用 cube-ui的createAPI模块定义的方法 , 展示头部的cover 组件
+    showCover() {
+      this.HeaderCoverComp =
+        this.HeaderCoverComp ||
+        this.$createHeaderCover({
+          $props: {
+            sellerData: "sellerData"
+          }
+        });
+      //  调用该组件的show方法显示弹出层
+      this.HeaderCoverComp.show();
+    }
+  },
   components: {
     Icon
+    // headerCover
   },
-  created() {
-    /* setTimeout(() => {
-      console.log(`header拿到了seller数据: ${JSON.stringify(this.sellerData)}`);
-    }, 1000); */
-  }
+  created() {}
 };
 </script>
 
@@ -52,14 +70,13 @@ export default {
 @import 'common/stylus/icon';
 
 .header {
-  background-color: rgba(0, 0, 0, 0.2);
-  background: rgba(7, 17, 27, 0.5);
+  background: $color-background-SS;
+  color: #fff;
 
-  .main {
+  &>.main {
     position: relative;
     padding: 24px 12px 18px 24px;
     font-size: 0;
-    color: #fff;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -126,7 +143,7 @@ export default {
       height: 24px;
       line-height: 24px;
       border-radius: 14px;
-      background: rgba(0, 0, 0, 0.2);
+      background: $color-background-2;
       text-align: center;
       display: flex;
       align-items: center;
@@ -136,6 +153,37 @@ export default {
       }
     }
   }
+
+  &>.footer {
+    position: relative;
+    height: 28px;
+    line-height: 28px;
+    padding: 0 22px 0 12px;
+    background: $color-background-SSS;
+    display: flex;
+    align-items: center;
+
+    .icon {
+      display: inline-block;
+      flex: 0 0 22px;
+      width: 22px;
+      height: 12px;
+      background-size: 22px 12px;
+      bg-image('bulletin');
+    }
+
+    .desc {
+      margin-left: 4px;
+      font-size: 10px;
+      flex: 1;
+    }
+
+    i {
+      position: absolute;
+      font-size: 10px;
+      right: 12px;
+      top: 8px;
+    }
+  }
 }
 </style>
-

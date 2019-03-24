@@ -7,11 +7,15 @@ export default {
   props: {
     size: {
       type: Number,
-      default: 1
+      default() {
+        return 1;
+      }
     },
     type: {
       type: Number,
-      default: 1
+      default() {
+        return 2;
+      }
     }
   },
   computed: {
@@ -25,6 +29,9 @@ export default {
       ];
       return `icon-${this.size} ${classMaps[this.type]}`;
     }
+  },
+  created() {
+    // console.log(this.type);
   }
 };
 </script>
@@ -47,19 +54,19 @@ export default {
   }
 
   &.discount {
-    bg-image('decrease_1');
+    bg-image('discount_1');
   }
 
   &.guarantee {
-    bg-image('decrease_1');
+    bg-image('guarantee_1');
   }
 
   &.invoice {
-    bg-image('decrease_1');
+    bg-image('invoice_1');
   }
 
   &.special {
-    bg-image('decrease_1');
+    bg-image('special_1');
   }
 }
 
@@ -73,19 +80,19 @@ export default {
   }
 
   &.discount {
-    bg-image('decrease_2');
+    bg-image('discount_2');
   }
 
   &.guarantee {
-    bg-image('decrease_2');
+    bg-image('guarantee_2');
   }
 
   &.invoice {
-    bg-image('decrease_2');
+    bg-image('invoice_2');
   }
 
   &.special {
-    bg-image('decrease_2');
+    bg-image('special_2');
   }
 }
 
@@ -99,19 +106,19 @@ export default {
   }
 
   &.discount {
-    bg-image('decrease_3');
+    bg-image('discount_3');
   }
 
   &.guarantee {
-    bg-image('decrease_3');
+    bg-image('guarantee_3');
   }
 
   &.invoice {
-    bg-image('decrease_3');
+    bg-image('invoice_3');
   }
 
   &.special {
-    bg-image('decrease_3');
+    bg-image('special_3');
   }
 }
 
@@ -125,19 +132,19 @@ export default {
   }
 
   &.discount {
-    bg-image('decrease_4');
+    bg-image('discount_4');
   }
 
   &.guarantee {
-    bg-image('decrease_4');
+    bg-image('guarantee_4');
   }
 
   &.invoice {
-    bg-image('decrease_4');
+    bg-image('invoice_4');
   }
 
   &.special {
-    bg-image('decrease_4');
+    bg-image('special_4');
   }
 }
 </style>
