@@ -1,36 +1,36 @@
 <template>
-  <!-- <transition name="fade"> -->
-  <div class="cover" v-show="visible">
-    <div class="main">
-      <div class="main-wrapper">
-        <div class="name">粥品香坊（回龙观）</div>
-        <div class="star-wrapper">
-          <Stars :size="48" :score="sellerData.score"/>
-        </div>
-        <div class="title">
-          <div class="line"></div>
-          <div class="text">优惠信息</div>
-          <div class="line"></div>
-        </div>
-        <div class="supports">
-          <div v-for="(item,index) in sellerData.supports" :key="index" class="support-item">
-            <Icon :size="2" :type="item.type" class="icon"/>
-            <div class="text">{{ item.description }}</div>
+  <transition name="fade">
+    <div class="cover" v-show="visible">
+      <div class="main">
+        <div class="main-wrapper">
+          <div class="name">粥品香坊（回龙观）</div>
+          <div class="star-wrapper">
+            <Stars :size="48" :score="sellerData.score"/>
           </div>
+          <div class="title">
+            <div class="line"></div>
+            <div class="text">优惠信息</div>
+            <div class="line"></div>
+          </div>
+          <div class="supports">
+            <div v-for="(item,index) in sellerData.supports" :key="index" class="support-item">
+              <Icon :size="2" :type="item.type" class="icon"/>
+              <div class="text">{{ item.description }}</div>
+            </div>
+          </div>
+          <div class="title">
+            <div class="line"></div>
+            <div class="text">商家公告</div>
+            <div class="line"></div>
+          </div>
+          <div class="bulletin">{{ sellerData.bulletin }}</div>
         </div>
-        <div class="title">
-          <div class="line"></div>
-          <div class="text">商家公告</div>
-          <div class="line"></div>
-        </div>
-        <div class="bulletin">{{ sellerData.bulletin }}</div>
+      </div>
+      <div class="close">
+        <i class="icon-close" @click="hide"></i>
       </div>
     </div>
-    <div class="close">
-      <i class="icon-close" @click="hide"></i>
-    </div>
-  </div>
-  <!-- </transition> -->
+  </transition>
 </template>
 
 <script>
@@ -69,19 +69,30 @@ export default {
 <style lang="stylus" scoped>
 @import 'common/stylus/variable';
 
-/* .fade-enter-active, .fade-leave-active {
-  transition: all 0.5s;
+/* 动画进场状态 */
+.fade-enter-active {
+  transition: all 0.3s ease;
 }
 
-.fade-enter, .fade-leave-active {
-  opacity: 0;
-  background: $color-background-S;
+/* 动画出场状态 */
+.fade-leave-active {
+  transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
 }
- */
+
+/* 动画状态起始/结束定点状态 */
+.fade-enter {
+  opacity: 0;
+}
+
+.fade-leave-to {
+  opacity: 0;
+}
+
 .cover {
   position: fixed;
   top: 0;
   left: 0;
+  z-index:9999;
   width: 100vw;
   height: 100vh;
   color: #fff;

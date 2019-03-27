@@ -1,51 +1,77 @@
 <template>
   <div id="app">
-    <!-- <h1>{{ msg }}</h1>
-    <a href="#">◆ 从这里开始 ◆</a>-->
     <v-header :sellerData="sellerData" class="headerWrapper"></v-header>
-    <v-tab class="tabWrapper" :tabs="tabs" :initialIndex="0"></v-tab>
+    <!-- <v-tab class="tabWrapper" :tabs="tabs" :initialIndex="0"></v-tab> -->
+    <v-tabBar :tabBarData="tabBarData"></v-tabBar>
+    <transition name="rv" mode="out-in">
+      <router-view></router-view>
+    </transition>
+    <!-- 商品详情层 -->
+    <foodCover/>
+    <!-- 购物车弹出层 -->
+    <cartListCover/>
   </div>
 </template>
 
 <script>
+import foodCover from "components/food/food.vue";
+import cartListCover from "components/shop-cart/cartListCover.vue";
 import vHeader from "components/common/header/header";
-import vTab from "components/tab/tab";
-import { getSeller } from "api";
+// import vTab from "components/tab/tab";
+import vTabBar from "components/tabBar/tabBar.vue";
+import { getSeller, getGoods, getRatings } from "api";
 
 import Goods from "components/goods/goods";
 import Seller from "components/seller/seller";
 import Ratings from "components/ratings/ratings";
+import { mapMutations } from "vuex";
 export default {
   name: "app",
   data() {
     return {
-      //   msg: "我的vue实战 饿了么商家"
-      sellerData: {}
+      sellerData: {},
+      tabBarData: [
+        {
+          to: "/goods",
+          label: "商品"
+        },
+        {
+          to: "/ratings",
+          label: "评论"
+        },
+        {
+          to: "/seller",
+          label: "商家"
+        }
+      ]
     };
   },
   methods: {
-    // 获取 seller 数据
-    /* getSellerData() {
-      this.$axios.get("/api/seller").then(
-        res => {
-          if (res.status === 200 && res.data) {
-            this.sellerData = res.data.data;
-          }
-        },
-        err => {
-          console.log(err);
-        }
-      );
-    } */
     _getSeller() {
       getSeller().then(seller => {
         this.sellerData = seller;
+        this.setSellerData(seller);
       });
-    }
+    },
+    _getGoods() {
+      getGoods().then(goods => {
+        this.setGoodsData(goods);
+      });
+    },
+    _getRatings() {
+      getRatings().then(ratings => {
+        this.setRatingsData(ratings);
+      });
+    },
+    ...mapMutations(["setSellerData", "setGoodsData", "setRatingsData"])
   },
+  watch: {},
   components: {
     vHeader,
-    vTab
+    // vTab,
+    vTabBar,
+    foodCover,
+    cartListCover
   },
   computed: {
     //   传递给 tab 组件的数据
@@ -78,6 +104,8 @@ export default {
   created() {
     // this.getSellerData();
     this._getSeller();
+    this._getGoods();
+    this._getRatings();
   }
 };
 </script>
@@ -92,5 +120,21 @@ export default {
     flex: 1;
     // height: calc(100% - 134px);
   }
+}
+
+.rv-enter-active,
+.rv-leave-active {
+  transition: all 0.3s;
+  transform: translate3d(0, 0, 0);
+}
+
+.rv-enter {
+  opacity: 0;
+  transform: translate3d(100%, 0, 0);
+}
+
+.rv-leave-active {
+  opacity: 0;
+  transform: translate3d(-100%, 0, 0);
 }
 </style>

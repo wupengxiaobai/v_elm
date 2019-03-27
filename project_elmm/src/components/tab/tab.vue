@@ -25,7 +25,7 @@
         ref="slide"
       >
         <cube-slide-item v-for="(tab,index) in tabs" :key="index">
-          <component :is="tab.component" :data="tab.data"></component>
+          <component ref="component" :is="tab.component" :data="tab.data"></component>
         </cube-slide-item>
         <!-- <cube-slide-item>
           <Goods/>
@@ -70,20 +70,14 @@ export default {
       }
     };
   },
-  components: {
-    /* Goods,
-    Seller,
-    Ratings */
-  },
   methods: {
-    //   tab 发生切换触发
-    /* tabChange(tabCurrent) {
-      //   console.log("tabChange拿取索引 ", this.tabs.indexOf(tabCurrent));
-      this.selectedLabel = tabCurrent;
-    }, */
     slideChange(slideCurrent) {
       //  slide 发生切换触发
       this.selectedIndex = slideCurrent;
+
+      //    tab 发生切换请求数据，此时最为合适
+      let component = this.$refs.component[this.selectedIndex];
+      component.fetch && component.fetch();
     },
     scroll(post) {
       //  slide 实时监听滚动距离, 执行tabbar跟踪设置transform位置
@@ -108,6 +102,15 @@ export default {
   },
   created() {
     this.selectedIndex = this.initialIndex;
+  },
+  mounted() {
+    // 初始默认调用一次change
+    this.slideChange(this.selectedIndex);
+  },
+  components: {
+    /* Goods,
+    Seller,
+    Ratings */
   }
 };
 </script>
@@ -119,14 +122,23 @@ export default {
   flex-direction: column;
 
   .slide-wrapper {
+    position: relative;
+    overflow: hidden;
     width: 100%;
     flex: 1;
-    overflow: hidden;
   }
 
   & >>> .cube-tab {
     padding: 10px 0;
   }
+
+  & >>> .cube-slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+  }
 }
 </style>
-
