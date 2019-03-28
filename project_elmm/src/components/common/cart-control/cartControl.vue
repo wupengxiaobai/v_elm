@@ -13,7 +13,7 @@
 </template>
 
 <script>
-const EVENT_ADD = "add";
+// const EVENT_ADD = "add";
 
 import { mapMutations } from "vuex";
 export default {
@@ -48,7 +48,6 @@ export default {
   }
 };
 </script>
-
 
 <style lang="stylus" scoped>
 .inner {

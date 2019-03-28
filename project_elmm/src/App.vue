@@ -124,7 +124,7 @@ export default {
 
 .rv-enter-active,
 .rv-leave-active {
-  transition: all 0.3s;
+  transition: all 0.33s;
   transform: translate3d(0, 0, 0);
 }
 

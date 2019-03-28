@@ -5,7 +5,7 @@
         <div class="main-wrapper">
           <div class="name">粥品香坊（回龙观）</div>
           <div class="star-wrapper">
-            <Stars :size="48" :score="sellerData.score"/>
+            <Stars class="stars" :size="48" :score="sellerData.score"/>
           </div>
           <div class="title">
             <div class="line"></div>
@@ -92,7 +92,7 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  z-index:9999;
+  z-index: 9999;
   width: 100vw;
   height: 100vh;
   color: #fff;
@@ -126,6 +126,12 @@ export default {
         margin-top: 18px;
         padding: 2px 0;
         text-align: center;
+
+        .stars {
+          &>>>.star-item {
+            margin: 0 12px;
+          }
+        }
       }
 
       .title {

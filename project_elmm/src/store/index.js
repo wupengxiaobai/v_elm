@@ -17,7 +17,6 @@ function ballsCreated() {
   return ret;
 }
 
-
 export default new Vuex.Store({
   state: {
     seller: {},
@@ -28,6 +27,8 @@ export default new Vuex.Store({
     dropBalls2: [], // 保存下落小球
     foodShow: false, // food详情层的显示与否
     currentFood: {}, //  当前需要查看的food详情
+    onlyShowTextRatings: false, // 只显示有内容的评论
+    ratingsTabIndex: 0 //  评论选项索引
 
   },
   mutations: {
@@ -87,6 +88,14 @@ export default new Vuex.Store({
         state.foodShow = false
         state.currentFood = {}
       }
+    },
+    //  只显示有内容的评论
+    onlyShowTextRatingsOperation(state) {
+      state.onlyShowTextRatings = !state.onlyShowTextRatings
+    },
+    //  修改评论tab索引
+    ratingsTabIndexOperation(state, index) {
+      state.ratingsTabIndex = index
     }
   },
   getters: {

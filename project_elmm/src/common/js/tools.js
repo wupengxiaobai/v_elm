@@ -49,8 +49,7 @@ var urlParse = function () {
   return obj;
 };
 
-
-export default {
+export {
   dateFormatDate,
   urlParse
 }

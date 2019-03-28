@@ -1,5 +1,5 @@
 <template>
-  <div class="shop-cart" @click="toggleCartList">
+  <div class="shop-cart" @click.stop="toggleCartList">
     <div class="left">
       <div class="car" :class="{'hasShop':totalCount>0}">
         <i class="icon-shopping_cart"></i>
@@ -28,7 +28,7 @@
 <script>
 import { mapState, mapGetters, mapMutations } from "vuex";
 
-const BALL_LEN = 10;
+// const BALL_LEN = 10;
 const innerClsHook = "inner-hook";
 
 /* function createBalls() {

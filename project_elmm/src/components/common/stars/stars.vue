@@ -59,7 +59,6 @@ export default {
 
   &.star24 {
     .star-item {
-      margin: 0 12px;
       width: 10px;
       height: 10px;
       background-size: 10px 10px;
@@ -80,7 +79,6 @@ export default {
 
   &.star36 {
     .star-item {
-      margin: 0 12px;
       width: 15px;
       height: 15px;
       background-size: 15px 15px;
@@ -101,7 +99,6 @@ export default {
 
   &.star48 {
     .star-item {
-      margin: 0 12px;
       width: 20px;
       height: 20px;
       background-size: 20px 20px;
