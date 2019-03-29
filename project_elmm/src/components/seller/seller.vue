@@ -14,9 +14,9 @@
             </div>
           </div>
           <div class="right">
-            <div class="favorite">
+            <div class="favorite" :class="{'on':isFavorite}" @click="favorite">
               <span class="icon-favorite"></span>
-              <span class="text">收藏</span>
+              <span class="text">{{ favoriteText }}</span>
             </div>
           </div>
         </div>
@@ -91,22 +91,43 @@ import Stars from "components/common/stars/stars.vue";
 import Interspace from "components/common/interspace/interspace.vue";
 import supportIcon from "components/common/support-ico/support-ico.vue";
 import { mapState } from "vuex";
+import { loadFromLocal, saveToLocal } from "common/js/storage.js";
+
+const KEY = "favorite";
 export default {
   data() {
     return {
       scrollHorOptions: {
-        // click: false,
-        // directionLockThreshold: 0
-      }
+        /* click: false,
+        directionLockThreshold: 0 */
+      },
+      isFavorite: false
     };
   },
+  methods: {
+    favorite() {
+      //   收藏状态改变
+      this.isFavorite = !this.isFavorite;
+      //   修改本地存储
+      saveToLocal(this.seller.id, KEY, this.isFavorite);
+      console.log(loadFromLocal(this.seller.id, KEY, false));
+    }
+  },
   computed: {
+    favoriteText() {
+      return this.isFavorite ? "已收藏" : "收藏";
+    },
     ...mapState(["seller"])
   },
   components: {
     Stars,
     Interspace,
     supportIcon
+  },
+  created() {
+    this.isFavorite = loadFromLocal(this.seller.id, KEY, false);
+    console.log("seller--", this.seller);
+    console.log("isFavorite", this.isFavorite);
   }
 };
 </script>
@@ -153,10 +174,18 @@ export default {
       }
 
       .right .favorite {
+        width: 40px;
         flex: 0 0 50px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        // display: flex;
+        // flex-direction: column;
+        // align-items: center;
+        text-align: center;
+
+        &.on {
+          .icon-favorite {
+            color: #f40;
+          }
+        }
 
         .icon-favorite {
           display: block;
@@ -298,4 +327,3 @@ export default {
   }
 }
 </style>
-

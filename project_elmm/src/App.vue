@@ -14,17 +14,22 @@
 </template>
 
 <script>
+import { urlParse } from "common/js/tools.js";
+
 import foodCover from "components/food/food.vue";
 import cartListCover from "components/shop-cart/cartListCover.vue";
 import vHeader from "components/common/header/header";
 // import vTab from "components/tab/tab";
 import vTabBar from "components/tabBar/tabBar.vue";
-import { getSeller, getGoods, getRatings } from "api";
+// import { getSeller, getGoods, getRatings } from "api";
 
-import Goods from "components/goods/goods";
+/* import Goods from "components/goods/goods";
 import Seller from "components/seller/seller";
-import Ratings from "components/ratings/ratings";
+import Ratings from "components/ratings/ratings"; */
 import { mapMutations } from "vuex";
+import seller from "api/seller.js";
+import goods from "api/goods.js";
+import ratings from "api/ratings.js";
 export default {
   name: "app",
   data() {
@@ -43,25 +48,32 @@ export default {
           to: "/seller",
           label: "商家"
         }
-      ]
+      ],
+      sellerId: urlParse().id
     };
   },
   methods: {
     _getSeller() {
-      getSeller().then(seller => {
+      /* getSeller().then(seller => {
+        Object.assign(seller, { id: this.sellerId });
         this.sellerData = seller;
         this.setSellerData(seller);
-      });
+      }); */
+      Object.assign(seller, { id: this.sellerId });
+      this.sellerData = seller;
+      this.setSellerData(seller);
     },
     _getGoods() {
-      getGoods().then(goods => {
+      /* getGoods({ id: this.sellerId }).then(goods => {
         this.setGoodsData(goods);
-      });
+      }); */
+      this.setGoodsData(goods);
     },
     _getRatings() {
-      getRatings().then(ratings => {
+      /* getRatings({ id: this.sellerId }).then(ratings => {
         this.setRatingsData(ratings);
-      });
+      }); */
+      this.setRatingsData(ratings);
     },
     ...mapMutations(["setSellerData", "setGoodsData", "setRatingsData"])
   },
@@ -75,7 +87,7 @@ export default {
   },
   computed: {
     //   传递给 tab 组件的数据
-    tabs() {
+    /* tabs() {
       return [
         {
           label: "商品",
@@ -99,7 +111,7 @@ export default {
           }
         }
       ];
-    }
+    } */
   },
   created() {
     // this.getSellerData();
